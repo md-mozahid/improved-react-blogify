@@ -27,8 +27,8 @@ const ProfileReducer = (state, action) => {
       return {
         ...state,
         loading: false,
-        blogs: action.data,
         user: action.data,
+        blogs: action.data.blogs,
       }
     }
     case DATA_FETCH_ERROR: {

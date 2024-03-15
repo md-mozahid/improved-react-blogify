@@ -17,7 +17,7 @@ export default function BlogCard({ blog }) {
             <a href="./single-blog.html">{blog?.title}</a>
           </h3>
           <p className="mb-6 text-base text-slate-500 mt-1">{blog?.content}</p>
-          <AuthorInfo />
+          <AuthorInfo blog={blog} />
           <BlogActions />
         </div>
       </div>

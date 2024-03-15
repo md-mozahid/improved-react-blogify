@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <SingleBlog />,
       },
       {
-        path: '/profile',
+        path: '/profile/:profileId',
         element: <ProfilePage />,
       },
 

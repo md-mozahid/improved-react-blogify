@@ -16,7 +16,7 @@ export default function Profile() {
         </div>
       )}
 
-      <Link to="/profile">
+      <Link to={`/profile/${auth?.user?.id}`}>
         <span className="text-white ml-2">
           {user?.firstName} {user?.lastName}
         </span>
