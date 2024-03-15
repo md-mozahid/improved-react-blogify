@@ -1,31 +1,40 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { axiosInstance } from '../../api'
+import PopularBlog from './PopularBlog'
 
 export default function PopularBlogs() {
-  const navigate = useNavigate()
-  const handleClick = () => {
-    navigate('/profile')
-  }
+  const [popularBlog, setPopularBlog] = useState(null)
+  const { blogId } = useParams()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(`/blogs/popular`)
+        if (response.status === 200) {
+          setPopularBlog(response.data.blogs)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [blogId])
+
+  // decide what to render
+  let content = null
+  if (popularBlog?.length === 0) content = <div>Popular blog not found!</div>
+  if (popularBlog?.length > 0)
+    content = popularBlog?.map((popular) => (
+      <PopularBlog key={popular?.id} popular={popular} />
+    ))
+
   return (
     <div className="sidebar-card">
       <h3 className="text-slate-300 text-xl lg:text-2xl font-semibold">
         Most Popular 👍️
       </h3>
-      <ul className="space-y-5 my-5">
-        <li>
-          <h3 className="text-slate-400 font-medium hover:text-slate-300 transition-all cursor-pointer">
-            <Link to="/single-blog">
-              How to Auto Deploy a Next.js App on Ubuntu from GitHub
-            </Link>
-          </h3>
-          <p className="text-slate-600 text-sm">
-            by{' '}
-            <span className="cursor-pointer" onClick={handleClick}>
-              Saad Hasan
-            </span>
-            <span>·</span> 100 Likes
-          </p>
-        </li>
-      </ul>
+      {content}
     </div>
   )
 }
