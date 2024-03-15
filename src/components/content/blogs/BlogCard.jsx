@@ -6,12 +6,11 @@ import BlogActions from './BlogActions'
 export default function BlogCard({ blog }) {
   const navigate = useNavigate()
   const handleClick = () => {
-    navigate('/single-blog')
+    navigate(`/single-blog/${blog?.id}`)
   }
   return (
     <>
       <div className="blog-card" onClick={handleClick}>
-        {/* <img className="blog-thumb" src={ReactRoadmap} alt="" /> */}
         {Thumbnail(blog?.thumbnail)}
         <div className="mt-2 relative">
           <h3 className="text-slate-300 text-xl lg:text-2xl">

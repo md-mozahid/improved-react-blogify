@@ -7,6 +7,7 @@ import './index.css'
 import AuthProvider from './providers/AuthProvider.jsx'
 import BlogProvider from './providers/BlogProvider.jsx'
 import ProfileProvider from './providers/ProfileProvider.jsx'
+import SingleBlogProvider from './providers/SingleBlogProvider.jsx'
 import router from './routes/Routes.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       />
       <ProfileProvider>
         <BlogProvider>
-          <RouterProvider router={router} />
+          <SingleBlogProvider>
+            <RouterProvider router={router} />
+          </SingleBlogProvider>
         </BlogProvider>
       </ProfileProvider>
     </AuthProvider>

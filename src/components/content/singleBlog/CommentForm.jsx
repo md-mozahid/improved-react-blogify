@@ -1,7 +1,7 @@
 export default function CommentForm() {
   return (
     <div className="flex items -center space-x-4">
-      <div className="avater-img bg-indigo-600 text-white">
+      <div className="avatar-img bg-indigo-600 text-white">
         <span className="">S</span>
       </div>
       <div className="w-full">

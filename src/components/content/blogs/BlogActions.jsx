@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DeleteIcon, EditIcon, ThreeDots } from '../../../constant/images'
+import { useAuth } from '../../../hooks'
 
 export default function BlogActions() {
   const [showActions, setShowActions] = useState(false)
+  const { auth } = useAuth()
+
   const navigate = useNavigate()
   const handleClick = (e) => {
     e.stopPropagation()

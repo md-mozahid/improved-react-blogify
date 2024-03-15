@@ -7,7 +7,11 @@ import { useBlogs } from '../hooks'
 
 export default function HomePage() {
   const { dispatch } = useBlogs()
+
   useEffect(() => {
+    dispatch({
+      type: actions.blogs.BLOGS_FETCHING,
+    })
     const fetchBlogs = async () => {
       try {
         const response = await axiosInstance.get('/blogs?page=1')

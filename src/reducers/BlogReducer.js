@@ -8,8 +8,8 @@ const initialState = {
   error: null,
 }
 
-const BlogReducer = (state, actions) => {
-  switch (actions.type) {
+const BlogReducer = (state, action) => {
+  switch (action.type) {
     case BLOGS_FETCHING: {
       return {
         ...state,
@@ -21,7 +21,7 @@ const BlogReducer = (state, actions) => {
       return {
         ...state,
         loading: false,
-        blogs: actions.data.blogs,
+        blogs: action.data.blogs,
       }
     }
   }
