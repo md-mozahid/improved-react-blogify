@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom'
-import { ReactRoadmap } from '../../../constant/images'
+import Thumbnail from '../../../utils/Thumbnail'
 import AuthorInfo from './AuthorInfo'
 import BlogActions from './BlogActions'
 
-export default function BlogCard() {
+export default function BlogCard({ blog }) {
   const navigate = useNavigate()
   const handleClick = () => {
     navigate('/single-blog')
@@ -11,16 +11,13 @@ export default function BlogCard() {
   return (
     <>
       <div className="blog-card" onClick={handleClick}>
-        <img className="blog-thumb" src={ReactRoadmap} alt="" />
+        {/* <img className="blog-thumb" src={ReactRoadmap} alt="" /> */}
+        {Thumbnail(blog?.thumbnail)}
         <div className="mt-2 relative">
           <h3 className="text-slate-300 text-xl lg:text-2xl">
-            <a href="./single-blog.html">React Roadmap in 2024</a>
+            <a href="./single-blog.html">{blog?.title}</a>
           </h3>
-          <p className="mb-6 text-base text-slate-500 mt-1">
-            Aenean eleifend ante maecenas pulvinar montes lorem et pede dis
-            dolor pretium donec dictum. Vici consequat justo enim. Venenatis
-            eget adipiscing luctus lorem.
-          </p>
+          <p className="mb-6 text-base text-slate-500 mt-1">{blog?.content}</p>
           <AuthorInfo />
           <BlogActions />
         </div>

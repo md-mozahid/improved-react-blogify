@@ -1,21 +1,21 @@
-import HomePage from "./HomePage";
-import CreateBlog from "./CreateBlog";
-import LoginPage from "./LoginPage";
-import ProfilePage from "./ProfilePage";
-import RegisterPage from "./RegisterPage";
-import SearchModal from "./SearchModal";
-import SingleBlog from "./SingleBlog";
-import UpdateBlog from "./UpdateBlog";
-import NotFoundPage from "./NotFoundPage";
+import CreateBlog from './CreateBlog'
+import HomePage from './HomePage'
+import LoginPage from './LoginPage'
+import NotFoundPage from './NotFoundPage'
+import ProfilePage from './ProfilePage'
+import RegisterPage from './RegisterPage'
+import SearchModal from './SearchModal'
+import SingleBlog from './SingleBlog'
+import UpdateBlog from './UpdateBlog'
 
 export {
+  CreateBlog,
   HomePage,
   LoginPage,
-  RegisterPage,
+  NotFoundPage,
   ProfilePage,
-  SingleBlog,
-  CreateBlog,
-  UpdateBlog,
+  RegisterPage,
   SearchModal,
-  NotFoundPage
-};
+  SingleBlog,
+  UpdateBlog,
+}

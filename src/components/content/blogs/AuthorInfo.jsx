@@ -10,7 +10,7 @@ export default function AuthorInfo() {
     <>
       <div className="flex justify-between items-center">
         <div className="flex items-center capitalize space-x-2">
-          <div className="avater-img bg-indigo-600 text-white">
+          <div className="avatar-img bg-indigo-600 text-white">
             <span className="">S</span>
           </div>
 

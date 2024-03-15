@@ -11,7 +11,7 @@ export default function BlogDetails() {
         </h1>
         <div className="flex justify-center items-center my-4 gap-4">
           <div className="flex items-center capitalize space-x-2">
-            <div className="avater-img bg-indigo-600 text-white">
+            <div className="avatar-img bg-indigo-600 text-white">
               <span className="">S</span>
             </div>
             <Link to="/profile">
