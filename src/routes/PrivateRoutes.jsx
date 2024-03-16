@@ -5,7 +5,7 @@ export default function PrivateRoutes({ children }) {
   const { auth } = useAuth()
   const location = useLocation()
 
-  if (auth?.accessToken) {
+  if (auth?.authToken) {
     return children
   }
   return <Navigate to="/login" state={{ from: location }} replace></Navigate>

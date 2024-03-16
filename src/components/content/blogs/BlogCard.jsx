@@ -16,7 +16,7 @@ export default function BlogCard({ blog }) {
           <h3 className="text-slate-300 text-xl lg:text-2xl">
             {blog?.title}
           </h3>
-          <p className="mb-6 text-base text-slate-500 mt-1">{blog?.content}</p>
+          <p className="mb-6 text-base text-slate-500 mt-1 line-clamp-3">{blog?.content}</p>
           <AuthorInfo blog={blog} />
           <BlogActions />
         </div>
