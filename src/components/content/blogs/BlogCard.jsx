@@ -14,7 +14,7 @@ export default function BlogCard({ blog }) {
         {Thumbnail(blog?.thumbnail)}
         <div className="mt-2 relative">
           <h3 className="text-slate-300 text-xl lg:text-2xl">
-            <a href="./single-blog.html">{blog?.title}</a>
+            {blog?.title}
           </h3>
           <p className="mb-6 text-base text-slate-500 mt-1">{blog?.content}</p>
           <AuthorInfo blog={blog} />

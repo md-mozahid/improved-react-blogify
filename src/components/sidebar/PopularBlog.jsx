@@ -1,11 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function PopularBlog({ popular }) {
-  const navigate = useNavigate()
-  const handleClick = () => {
-    navigate(`/profile/${popular?.author?.id}`)
-  }
-
   return (
     <ul className="space-y-5 my-5">
       <li>
@@ -14,9 +9,11 @@ export default function PopularBlog({ popular }) {
         </h3>
         <p className="text-slate-600 text-sm">
           by{' '}
-          <span className="cursor-pointer" onClick={handleClick}>
-            {popular?.author?.firstName} {popular?.author?.lastName}
-          </span>
+          <Link to={`/profile/${popular?.author?.id}`}>
+            <span className="cursor-pointer">
+              {popular?.author?.firstName} {popular?.author?.lastName}
+            </span>
+          </Link>
           <span>·</span> {popular?.likes?.length ?? 0} Likes
         </p>
       </li>

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { axiosInstance } from '../../api'
+import { useAxios } from '../../hooks'
 import PopularBlog from './PopularBlog'
 
 export default function PopularBlogs() {
   const [popularBlog, setPopularBlog] = useState(null)
-  const { blogId } = useParams()
+  const { axiosInstance } = useAxios()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +18,7 @@ export default function PopularBlogs() {
       }
     }
     fetchData()
-  }, [blogId])
+  }, [axiosInstance])
 
   // decide what to render
   let content = null

@@ -16,7 +16,7 @@ export default function BlogDetails({ blog }) {
         />
         <Tags tags={blog?.tags} />
         <div className="mx-auto w-full md:w-10/12 text-slate-300 text-base md:text-lg leading-8 py-2 !text-left">
-          {blog.content}
+          {blog?.content}
         </div>
       </div>
     </>
