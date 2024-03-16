@@ -1,6 +1,8 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import Field from '../shared/Field'
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import Field from "../shared/Field";
+import { axiosInstance } from "../../api";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
   const {
@@ -8,9 +10,23 @@ export default function RegisterForm() {
     register,
     setError,
     formState: { errors },
-  } = useForm()
+  } = useForm();
+  const navigate = useNavigate();
 
-  const registerFormSubmit = (formData) => {}
+  const registerFormSubmit = async (formData) => {
+    try {
+      const response = await axiosInstance.post("/auth/register", formData);
+      if (response.status === 200) {
+        toast.success("Register successful");
+        navigate("/login");
+      }
+    } catch (error) {
+      setError("root.random", {
+        type: "random",
+        message: ` ${error.response.data.error} `,
+      });
+    }
+  };
 
   return (
     <section className="container">
@@ -19,10 +35,11 @@ export default function RegisterForm() {
         <form
           action=""
           autoComplete="off"
-          onSubmit={handleSubmit(registerFormSubmit)}>
+          onSubmit={handleSubmit(registerFormSubmit)}
+        >
           <Field label="First Name" error={errors.firstName}>
             <input
-              {...register('firstName', { required: 'First Name' })}
+              {...register("firstName", { required: "Required first Name" })}
               type="text"
               id="firstName"
               name="firstName"
@@ -31,7 +48,7 @@ export default function RegisterForm() {
           </Field>
           <Field label="Last Name" error={errors.lastName}>
             <input
-              {...register('lastName')}
+              {...register("lastName")}
               type="text"
               id="lastName"
               name="lastName"
@@ -40,7 +57,7 @@ export default function RegisterForm() {
           </Field>
           <Field label="Email" error={errors.email}>
             <input
-              {...register('email', { required: 'Email ID is Required' })}
+              {...register("email", { required: "Email ID is Required" })}
               type="email"
               id="email"
               name="email"
@@ -49,11 +66,11 @@ export default function RegisterForm() {
           </Field>
           <Field label="Password" error={errors.password}>
             <input
-              {...register('password', {
-                required: 'Password is required',
+              {...register("password", {
+                required: "Password is required",
                 minLength: {
                   value: 8,
-                  message: 'Your password must be at least 8 characters',
+                  message: "Your password must be at least 8 characters",
                 },
               })}
               type="password"
@@ -66,12 +83,13 @@ export default function RegisterForm() {
           <div className="mb-6">
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white p-3 rounded-md hover:bg-indigo-700 transition-all duration-200">
+              className="w-full bg-indigo-600 text-white p-3 rounded-md hover:bg-indigo-700 transition-all duration-200"
+            >
               Create Account
             </button>
           </div>
           <p className="text-center">
-            Already have account?{' '}
+            Already have account?{" "}
             <Link to="/login" className="text-indigo-600 hover:underline">
               Login
             </Link>
@@ -79,5 +97,5 @@ export default function RegisterForm() {
         </form>
       </div>
     </section>
-  )
+  );
 }
