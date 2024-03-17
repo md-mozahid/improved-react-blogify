@@ -1,11 +1,12 @@
 import { actions } from '../actions'
 
-const { BLOGS_FETCHED, BLOGS_FETCHING } = actions.blogs
+const { BLOGS_FETCHED, BLOGS_FETCHING, BLOGS_SEARCH } = actions.blogs
 
 const initialState = {
   blogs: [],
   loading: false,
   error: null,
+  search: '',
 }
 
 const BlogReducer = (state, action) => {
@@ -22,6 +23,14 @@ const BlogReducer = (state, action) => {
         ...state,
         loading: false,
         blogs: action.data.blogs,
+      }
+    }
+
+    case BLOGS_SEARCH: {
+      return {
+        ...state,
+        loading: true,
+        search: action.data,
       }
     }
   }

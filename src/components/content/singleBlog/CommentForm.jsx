@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { actions } from '../../../actions'
 import { serverApi } from '../../../api'
 import { useAuth, useAxios, useSingleBlog } from '../../../hooks'
+import Avatar from '../../../utils/Avatar'
 
 export default function CommentForm() {
   const { state, dispatch } = useSingleBlog()
@@ -41,7 +42,11 @@ export default function CommentForm() {
   return (
     <div className="flex items -center space-x-4">
       <div className="avatar-img bg-indigo-600 text-white">
-        <span className="">S</span>
+        {auth?.user?.avatar ? (
+          Avatar(auth?.user?.avatar)
+        ) : (
+          <span className="">{auth?.user?.firstName?.charAt(0)}</span>
+        )}
       </div>
       <form className="w-full" onSubmit={handleClick}>
         <textarea
