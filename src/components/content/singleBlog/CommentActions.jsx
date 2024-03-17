@@ -5,7 +5,7 @@ import { serverApi } from '../../../api'
 import { DeleteIcon, EditIcon, ThreeDots } from '../../../constant/images'
 import { useAuth, useAxios, useSingleBlog } from '../../../hooks'
 
-export default function CommentActions({ comment }) {
+export default function CommentActions({ comment, setIsEdit }) {
   const [showActions, setShowActions] = useState(false)
   const { auth } = useAuth()
   const { state, dispatch } = useSingleBlog()
@@ -18,8 +18,11 @@ export default function CommentActions({ comment }) {
   }
   const handleUpdate = (e) => {
     e.stopPropagation()
+    setIsEdit(true)
     setShowActions(false)
   }
+
+  // blog comment delete
   const handleDelete = async (e) => {
     e.stopPropagation()
     try {
@@ -39,10 +42,11 @@ export default function CommentActions({ comment }) {
     }
     // alert('Are you want to delete this blog ?')
   }
+
   return (
     <>
       {isLoggedInUser && (
-        <div className="absolute right-0 top-0">
+        <div className="absolute right-0 top-0 place-items-center">
           <button onClick={handleClick}>
             <img src={ThreeDots} alt="3dots of Action" />
           </button>
