@@ -1,22 +1,46 @@
 import { useEffect, useState } from 'react'
 import { actions } from '../../actions'
+import { serverApi } from '../../api'
 import { CloseIcon } from '../../constant/images'
-import { useBlogs } from '../../hooks'
+import { useAxios, useBlogs } from '../../hooks'
+import { useDebounce } from '../../hooks/useDebounce'
 import SearchContent from './SearchContent'
 
 export default function SearchHeader({ onClose }) {
   const { state, dispatch } = useBlogs()
   const [searchTerm, setSearchTerm] = useState('')
-
-  const searchByString = (blog) =>
-    blog?.title?.toLowerCase().includes(state?.search?.toLowerCase())
+  const debounceValue = useDebounce(searchTerm, 800)
+  const { axiosInstance } = useAxios()
 
   useEffect(() => {
-    dispatch({
-      type: actions.blogs.BLOGS_SEARCH,
-      data: searchTerm,
-    })
-  }, [dispatch, searchTerm])
+    if (searchTerm?.length > 0) {
+      const fetchSearchData = async () => {
+        try {
+          const response = await axiosInstance.get(
+            `${serverApi}/search?q=${debounceValue}`,
+            { query: 'await' }
+          )
+          dispatch({
+            type: actions.blogs.BLOGS_SEARCH,
+            data: response.data,
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      fetchSearchData()
+    }
+  }, [debounceValue, dispatch, axiosInstance, searchTerm.length])
+
+  // const searchByString = (blog) =>
+  //   blog?.title?.toLowerCase().includes(state?.search?.toLowerCase())
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: actions.blogs.BLOGS_SEARCH,
+  //     data: searchTerm,
+  //   })
+  // }, [dispatch, searchTerm])
 
   return (
     <section className="absolute left-0 top-0 w-full h-full grid place-items-center bg-slate-800/50 backdrop-blur-sm z-50">
@@ -37,7 +61,7 @@ export default function SearchHeader({ onClose }) {
         <div className="">
           <h3 className="text-slate-400 font-bold mt-6">Search Results</h3>
           <div className="my-4 divide-y-2 divide-slate-500/30 max-h-[440px] overflow-y-scroll overscroll-contain">
-            {state?.blogs?.filter(searchByString).map((blog) => (
+            {state?.blogs?.map((blog) => (
               <SearchContent key={blog?.id} blog={blog} />
             ))}
           </div>
