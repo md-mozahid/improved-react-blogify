@@ -47,7 +47,7 @@ export default function LoginForm() {
               id="email"
               name="email"
               className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
-              defaultValue="saadhasan@learnwithsumit.com"
+              defaultValue="ce.muzahid@gmail.com"
             />
           </Field>
           <Field label="Password" error={errors.password}>
@@ -63,7 +63,7 @@ export default function LoginForm() {
               id="password"
               name="password"
               className="w-full p-3 bg-[#030317] border border-white/20 rounded-md focus:outline-none focus:border-indigo-500"
-              defaultValue="learnwithsumit123"
+              defaultValue="12345678"
             />
           </Field>
           <p>{errors?.root?.random?.message}</p>

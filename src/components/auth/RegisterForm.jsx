@@ -16,7 +16,7 @@ export default function RegisterForm() {
   const registerFormSubmit = async (formData) => {
     try {
       const response = await axiosInstance.post("/auth/register", formData);
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success("Register successful");
         navigate("/login");
       }

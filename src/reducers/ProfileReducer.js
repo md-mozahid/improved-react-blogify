@@ -4,12 +4,12 @@ const {
   DATA_FETCHING,
   DATA_FETCHED,
   DATA_FETCH_ERROR,
-  //   IMAGE_UPDATED,
-  //   USER_DATA_EDITED,
+  IMAGE_UPDATED,
+  USER_DATA_EDITED,
 } = actions.profile
 
 const initialState = {
-  user: null,
+  user: {},
   blogs: [],
   loading: false,
   error: null,
@@ -38,6 +38,30 @@ const ProfileReducer = (state, action) => {
         error: action.error,
       }
     }
+
+    case USER_DATA_EDITED: {
+      return {
+        ...state,
+        loading: false,
+        user: {
+          ...state.user,
+          bio: action.data.user.bio,
+        },
+      }
+    }
+
+    case IMAGE_UPDATED:{
+      return {
+        ...state,
+        loading: false,
+        user:{
+          ...state.user,
+          avatar: action.data.avatar
+        }
+      }
+    }
+    default:
+      return state
   }
 }
 
