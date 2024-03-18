@@ -1,46 +1,42 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { actions } from '../../actions'
 import { serverApi } from '../../api'
 import { CloseIcon } from '../../constant/images'
-import { useAxios, useBlogs } from '../../hooks'
+import { useAxios } from '../../hooks'
 import { useDebounce } from '../../hooks/useDebounce'
+import { SearchReducer, initialState } from '../../reducers/SearchReducer'
 import SearchContent from './SearchContent'
 
 export default function SearchHeader({ onClose }) {
-  const { state, dispatch } = useBlogs()
+  const [state, dispatch] = useReducer(SearchReducer, initialState)
   const [searchTerm, setSearchTerm] = useState('')
   const debounceValue = useDebounce(searchTerm, 800)
   const { axiosInstance } = useAxios()
 
   useEffect(() => {
     if (searchTerm?.length > 0) {
+      dispatch({ type: actions.search.DATA_FETCHING })
+
       const fetchSearchData = async () => {
         try {
           const response = await axiosInstance.get(
-            `${serverApi}/search?q=${debounceValue}`,
-            { query: 'await' }
+            `${serverApi}/search?q=${debounceValue}`
           )
           dispatch({
-            type: actions.blogs.BLOGS_SEARCH,
+            type: actions.search.DATA_FETCHED,
             data: response.data,
           })
         } catch (error) {
-          console.error(error)
+          dispatch({
+            type: actions.search.DATA_FETCH_ERROR,
+            error: error.message,
+            // length: length,
+          })
         }
       }
       fetchSearchData()
     }
-  }, [debounceValue, dispatch, axiosInstance, searchTerm.length])
-
-  // const searchByString = (blog) =>
-  //   blog?.title?.toLowerCase().includes(state?.search?.toLowerCase())
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: actions.blogs.BLOGS_SEARCH,
-  //     data: searchTerm,
-  //   })
-  // }, [dispatch, searchTerm])
+  }, [debounceValue, dispatch, axiosInstance, searchTerm?.length])
 
   return (
     <section className="absolute left-0 top-0 w-full h-full grid place-items-center bg-slate-800/50 backdrop-blur-sm z-50">
@@ -61,8 +57,8 @@ export default function SearchHeader({ onClose }) {
         <div className="">
           <h3 className="text-slate-400 font-bold mt-6">Search Results</h3>
           <div className="my-4 divide-y-2 divide-slate-500/30 max-h-[440px] overflow-y-scroll overscroll-contain">
-            {state?.blogs?.map((blog) => (
-              <SearchContent key={blog?.id} blog={blog} />
+            {state?.search?.data?.map((blog) => (
+              <SearchContent key={blog?.id} blog={blog} onClose={onClose} />
             ))}
           </div>
         </div>
