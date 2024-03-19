@@ -1,31 +1,39 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { actions } from '../../../actions'
+import { serverApi } from '../../../api'
 import { DeleteIcon, EditIcon, ThreeDots } from '../../../constant/images'
-import { useAuth } from '../../../hooks'
+import { useAxios, useSingleBlog } from '../../../hooks'
 
-export default function BlogActions() {
+export default function BlogActions({ blog }) {
   const [showActions, setShowActions] = useState(false)
-  const { auth } = useAuth()
+  const { dispatch } = useSingleBlog()
+  const { axiosInstance } = useAxios()
 
   const navigate = useNavigate()
-  const handleClick = (e) => {
-    e.stopPropagation()
-    setShowActions(!showActions)
-  }
   const handleUpdate = (e) => {
     e.stopPropagation()
     setShowActions(false)
     navigate('/update-blog')
   }
-  const handleDelete = (e) => {
-    e.stopPropagation()
-    setShowActions(false)
-    alert('Are you want to delete this blog ?')
+
+  const handleDelete = async (id) => {
+     await axiosInstance.delete(`${serverApi}/blogs/${id}`)
+    
+      dispatch({
+        type: actions.singleBlog.BLOG_DELETED,
+        data: id,
+      })
+    
   }
   return (
     <>
       <div className="absolute right-0 top-0">
-        <button onClick={handleClick}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            setShowActions(!showActions)
+          }}>
           <img src={ThreeDots} alt="3dots of Action" />
         </button>
         {showActions && (
@@ -38,7 +46,11 @@ export default function BlogActions() {
             </button>
             <button
               className="action-menu-item hover:text-red-500"
-              onClick={handleDelete}>
+              onClick={(e) => {
+                handleDelete(blog?.id)
+                setShowActions(false)
+                e.stopPropagation()
+              }}>
               <img src={DeleteIcon} alt="Delete" />
               Delete
             </button>

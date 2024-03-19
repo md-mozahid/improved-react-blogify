@@ -22,7 +22,7 @@ export default function BlogCard({ blog }) {
             {blog?.content}
           </p>
           <AuthorInfo blog={blog} />
-          {user && <BlogActions />}
+          {user && <BlogActions blog={blog} />}
         </div>
       </div>
     </>

@@ -1,12 +1,12 @@
 import { actions } from '../actions'
 
-const { BLOGS_FETCHED, BLOGS_FETCHING } = actions.blogs
+const { BLOGS_FETCHED, BLOGS_FETCHING, BLOG_CREATED, BLOG_CREATED_ERROR } =
+  actions.blogs
 
 const initialState = {
   blogs: [],
   loading: false,
   error: null,
-  search: [],
 }
 
 const BlogReducer = (state, action) => {
@@ -23,6 +23,20 @@ const BlogReducer = (state, action) => {
         ...state,
         loading: false,
         blogs: action.data.blogs,
+      }
+    }
+    case BLOG_CREATED: {
+      return {
+        ...state,
+        loading: false,
+        blogs: [...state.blogs, action.data.blogs],
+      }
+    }
+    case BLOG_CREATED_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
       }
     }
   }

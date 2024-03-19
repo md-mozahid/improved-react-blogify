@@ -9,6 +9,7 @@ const {
   BLOG_COMMENT_DELETED_ERROR,
   BLOG_LIKED,
   BLOG_FAVORITE,
+  BLOG_DELETED,
 } = actions.singleBlog
 
 const initialState = {
@@ -103,6 +104,14 @@ const SingleBlogReducer = (state, action) => {
           ...state.blog,
           isFavourite: action.data,
         },
+      }
+    }
+
+    case BLOG_DELETED: {
+      const deleteBlog = state?.blogs?.filter((blog) => blog?.id !== action.data)
+      return {
+        ...state,
+        blogs: deleteBlog,
       }
     }
   }
